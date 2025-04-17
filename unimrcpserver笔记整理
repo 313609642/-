@@ -32,3 +32,6 @@ systemctl start ali-mrcp.service
 systemctl daemon-reload
 systemctl start ali-mrcp.service
 systemctl enable ali-mrcp.service
+
+cat /proc/sys/kernel/core_pattern 
+/opt/unimrcp-1.7.0-tx/core-%e-%p-%t
