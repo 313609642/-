@@ -28,3 +28,7 @@ cat startup.sh
 systemctl start ali-mrcp.service
 
 
+启用服务：
+systemctl daemon-reload
+systemctl start ali-mrcp.service
+systemctl enable ali-mrcp.service
