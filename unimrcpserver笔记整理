@@ -1,1 +1,30 @@
 
+怎么部署 unimrcpserver
+
+cat ali-mrcp.service 
+[Unit]
+Description=ali MRCP server daemon
+After=network.target
+
+[Service]
+ExecStart=/opt/unimrcp-1.7.0-ali/bin/unimrcpserver -r /opt/unimrcp-1.7.0-ali -o 2 -l 7 -w
+Restart=on-failure
+LimitCORE=infinity
+LimitNOFILE=65535
+
+[Install]
+WantedBy=multi-user.target
+[root@VM-2-24-centos system]# pwd
+/etc/systemd/system
+
+运行程序
+cat startup.sh 
+#!/bin/sh
+systemctl start ali-mrcp.service
+
+🛑运行程序
+cat startup.sh 
+#!/bin/sh
+systemctl start ali-mrcp.service
+
+
