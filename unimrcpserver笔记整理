@@ -35,3 +35,7 @@ systemctl enable ali-mrcp.service
 
 cat /proc/sys/kernel/core_pattern 
 /opt/unimrcp-1.7.0-tx/core-%e-%p-%t
+
+
+# 查看捕获的 core
+coredumpctl list
