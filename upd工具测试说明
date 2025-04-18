@@ -1,0 +1,28 @@
+tcp端口测试
+root@96363transfertest iport]# telnet xxx.xxx.xxx.xx 20001
+Trying xxx.xxx.xxx.xx
+Connected to xxx.xxx.xxx.xx
+Escape character is '^]'.
+
+安装nc 监听工具
+ sudo yum install nc
+
+创建nc 监听端口
+[root@VM-2-19-centos fs-cm-01]# nc -ul -s xxx.xxx.xxx.xx 20001
+Ncat: -l and -s are incompatible.  Specify the address and port to bind to like you would a host to connect to. QUITTING.
+
+监听成功端口提醒
+[root@VM-2-19-centos opensips]# netstat -nap |grep 20001   
+udp        0      0 xxx.xxx.xxx.xx:20001    0.0.0.0:*                           22564/nc
+
+
+发送成功
+[root@VM-2-24-centos ~]# echo "12345" | nc -vu xxx.xxx.xxx.xx 20001
+Ncat: Version 7.50 ( https://nmap.org/ncat )
+Ncat: Connected to xxx.xxx.xxx.xx:20001.
+Ncat: 6 bytes sent, 0 bytes received in 0.01 seconds.
+
+
+[root@96363transfertest iport]# echo "12345" | nc -vu xxx.xxx.xxx.xx 20001
+
+ 没有任何内容为失败
