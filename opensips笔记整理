@@ -1,1 +1,39 @@
+opensips sip路由讲解
+公网向内网穿透invate消息路由
+Request-Line: INVITE sip:81010006@1217320380889497600.ctrip SIP/2.0
+Record-Route: <sip:123.**.**.**:20001;lr> 
+Record-Route: <sip:172.16.2.15:20001;lr>
+Record-Route: <sip:10.0.1.38:5066;lr;did=778.58bc83e5>
+Contact: <sip:gw+opensips@10.0.1.38:5060;transport=udp;gw=opensips>
+....
+sdp
+....
 
+
+路由流程  10.0.1.38 ->  172.16.2.15 ->  123.**.**.** -> (本机IP没有记录路由)通过opensips $du 强制转移到内网地址  -> 192.168.53.166
+
+这个模式会导致一个问题后续192.168.53.166发出来的ACK,BYE 消息全送到 123.**.**.** 地址，如果192.168.53.166 没有开放公网最终的结果（ACK，BYE）消息丢失
+修改方案添加本地路由地址 Record-Route: <sip:192.168.53.25:5060;lr>
+
+后变成下面信令模式
+Request-Line: INVITE sip:81010006@1217320380889497600.ctrip SIP/2.0
+Record-Route: <sip:192.168.53.25:5060;lr> ----重要-----
+Record-Route: <sip:123.**.**.**:20001;lr> 
+Record-Route: <sip:172.16.2.15:20001;lr>
+Record-Route: <sip:10.0.1.38:5066;lr;did=778.58bc83e5>
+Contact: <sip:gw+opensips@10.0.1.38:5060;transport=udp;gw=opensips>
+....
+sdp
+....
+
+
+
+内网向公网穿透消息
+Request-Line: ACK sip:81010006@10.0.1.39:7088;transport=udp SIP/2.0
+Route: <sip:192.168.53.25:5060;lr>
+Route: <sip:123.207.184.18:20001;lr>
+Route: <sip:172.16.2.15:20001;lr>
+Route: <sip:10.0.1.38:5066;lr;did=778.58bc83e5>
+
+
+路由流程就是 192.168.53.25 -> 123.207.184.18（确保网络正常） -> 172.16.2.15 -> 10.0.1.38
