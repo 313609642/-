@@ -1,7 +1,16 @@
 
 怎么部署 unimrcpserver
 
-cat ali-mrcp.service 
+/sys/fs/cgroup/pids/system.slice/ali-mrcp.service    # 进程数限制
+/sys/fs/cgroup/cpu,cpuacct/system.slice/ali-mrcp.service  # CPU配额
+/sys/fs/cgroup/memory/system.slice/ali-mrcp.service  # 内存限制
+/sys/fs/cgroup/blkio/system.slice/ali-mrcp.service   # 块设备I/O限制
+
+/etc/systemd/system/ali-mrcp.service	systemd 服务单元文件	验证 ExecStart、Restart、Limit 等参数配置
+/etc/systemd/system/multi-user.target.wants/ali-mrcp.service	服务启用符号链接	确认服务已正确启用 (systemctl is-enabled)
+
+
+cat /etc/systemd/system/ali-mrcp.service
 [Unit]
 Description=ali MRCP server daemon
 After=network.target
