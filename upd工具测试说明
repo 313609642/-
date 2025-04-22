@@ -22,7 +22,6 @@ Ncat: Version 7.50 ( https://nmap.org/ncat )
 Ncat: Connected to xxx.xxx.xxx.xx:20001.
 Ncat: 6 bytes sent, 0 bytes received in 0.01 seconds.
 
-
+没有任何内容为失败
 [root@96363transfertest iport]# echo "12345" | nc -vu xxx.xxx.xxx.xx 20001
 
- 没有任何内容为失败
