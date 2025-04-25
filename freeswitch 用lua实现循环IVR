@@ -1,0 +1,48 @@
+
+
+local asr_model = 0
+if asr_flag then
+    local asr_status, content = getAsrModel(G.sip_from_host)
+    consoleLog("CRIT", "######################################################################################")
+    
+    if asr_status and content then
+        -- 使用正则表达式强制限定输入为 1 或 2
+        local regex_validator = "^[12]$"  -- 仅接受 1 或 2
+        
+        -- 调用 playAndGetDigits 并添加输入验证
+        asr_model = session:playAndGetDigits(
+            1,      -- min_digits: 必须输入1位
+            1,      -- max_digits: 只能输入1位
+            3,      -- max_attempts: 最多尝试3次
+            5000,   -- timeout: 5秒超时（单位：毫秒）
+            "#",    -- terminators: 终止符（可选）
+            content,-- prompt_audio: 提示语音内容（如TTS或文件路径）
+            "ivr/invalid_input.wav", -- invalid_audio: 输入非法时的提示语音
+            "",     -- variable_name: 不存储变量
+            regex_validator, -- regex: 正则验证
+            2000    -- digit_timeout: 每位输入间隔超时2秒
+        )
+        
+        -- 处理用户输入结果
+        if asr_model then
+            -- 转换为数字类型（原为字符串）
+            local selected = tonumber(asr_model)
+            
+            -- 更新 ASR 引擎配置（仅允许1或2）
+            if selected == 1 or selected == 2 then
+                G.asrEngine = asrEngine(G.env, 9 + selected)
+                G.asrParams["allow-break"] = -1
+                consoleLog("INFO", string.format("ASR 模式已切换: 选项=%d, 引擎=%s", selected, G.asrEngine))
+            else
+                consoleLog("WARN", "非法输入（非1/2），使用默认配置")
+                -- 可在此处设置默认 ASR 引擎
+            end
+        else
+            consoleLog("WARN", "用户未输入或输入超时，使用默认配置")
+        end
+    else
+        consoleLog("ERR", "获取 ASR 配置失败，domain: " .. tostring(G.sip_from_host))
+    end
+    
+    asr_flag = false  -- 确保仅执行一次
+end
