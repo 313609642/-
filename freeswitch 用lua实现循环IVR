@@ -46,3 +46,7 @@ if asr_flag then
     
     asr_flag = false  -- 确保仅执行一次
 end
+
+
+![示例图片](https://github.com/313609642/-/blob/main/%E5%BE%AE%E4%BF%A1%E5%9B%BE%E7%89%87_20250425114526_1.png)
+
