@@ -26,3 +26,10 @@ route {
 
    record_route_preset("$var(wan):$Rp", "$var(lan):$Rp");
 }
+
+
+抓包检查
+用 tcpdump 观察 SIP 消息中的 Route 头：
+
+bash
+tcpdump -i any -A -n port 5060 | grep "Route:"
