@@ -1,0 +1,28 @@
+方法1：
+route {
+    # 先删除旧 Route 头（可选）
+    remove_hf("Route");
+
+    # 添加两个新 Route 头
+    append_hf("Route: <sip:192.168.1.1:5060;lr>\r\n");
+    append_hf("Route: <sip:10.0.0.2:5060;transport=tcp>\r\n");
+
+    # 记录日志（调试用）
+    xlog("L_INFO", "新增 Route 头：\n$hdr(Route)\n");
+
+    # 转发请求
+    t_relay();
+}
+
+
+方法2：
+route {
+
+  record_route();
+}
+
+方法3：
+route {
+
+   record_route_preset("$var(wan):$Rp", "$var(lan):$Rp");
+}
