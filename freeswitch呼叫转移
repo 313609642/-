@@ -1,0 +1,97 @@
+FreeSWITCH支持以下几种呼叫转移方式：
+
+直接转移 (Attended Transfer)
+使用session:transfer()方法
+示例：session:transfer("1000", "XML", "public")
+特点：先接通目标号码，确认后再完成转移
+
+盲转 (Blind Transfer)
+使用session:transfer()方法
+示例：session:transfer("1000", "XML", "public")
+特点：直接转移，不等待确认
+
+桥接转移 (Bridge Transfer)
+使用session:bridge()方法
+示例：session:bridge("user/1000")
+特点：将两个通话桥接在一起
+
+协商转移 (Consultative Transfer)
+使用session:execute("transfer", "1000")
+特点：先保持当前通话，接通目标后再决定是否转移
+
+三方通话 (Three-way Calling)
+使用session:execute("conference", "conf_name")
+特点：将多个通话合并到一个会议中
+
+REFER转移 (REFER Transfer)
+使用SIP REFER方法
+特点：符合SIP标准的转移方式
+
+特殊转移模式：
+闪转 (Flash Transfer)：使用特殊前缀如"9*"
+盲转程控分机：使用"5*"前缀
+3转接：使用"3"前缀
+
+
+
+session_transfer() - 用于普通转移
+bridgeTo() - 用于桥接转移
+特殊前缀转移 - 如"1*"用于外线转移，"3*"用于IBCF注册分机转移
+
+
+
+
+REFER转移是SIP协议标准定义的呼叫转移方式，符合RFC 3515规范
+需要解释完整的REFER转移流程，包括信令交互过程
+流程涉及主叫方、被叫方和转移目标方三方
+需要说明FreeSWITCH在REFER转移中的角色和行为
+可以结合SIP消息序列来说明
+
+Task Completed
+
+
+REFER转移的标准流程如下：
+
+初始通话建立：
+
+主叫A与被叫B建立通话（INVITE, 200 OK, ACK）
+发起REFER请求：
+
+A向B发送REFER请求，包含Refer-To头字段指定转移目标C
+REFER sip:B@domain SIP/2.0
+Refer-To: <sip:C@domain>
+响应REFER请求：
+
+B返回202 Accepted表示接受转移请求
+
+建立新呼叫：
+
+B向C发起新INVITE请求建立呼叫
+在Contact头中包含Replaces参数表示替换现有会话
+通知转移状态：
+
+B通过NOTIFY消息向A报告转移进度
+NOTIFY sip:A@domain SIP/2.0
+Subscription-State: active
+Event: refer
+完成转移：
+
+当B与C通话建立后，B挂断与A的通话
+发送BYE结束与A的会话
+最终状态通知：
+
+B发送最终NOTIFY告知转移结果
+NOTIFY sip:A@domain SIP/2.0
+Subscription-State: terminated
+Event: refer;id=123
+SIP/2.0 200 OK
+
+在FreeSWITCH中实现REFER转移的关键点：
+
+需要启用SIP REFER支持
+通过设置sip_h_Refer-To头字段指定转移目标
+可以使用session:transfer()或originate API触发
+转移过程中会生成新的呼叫UUID
+可以通过NOTIFY消息跟踪转移状态
+
+
