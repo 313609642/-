@@ -95,3 +95,43 @@ SIP/2.0 200 OK
 可以通过NOTIFY消息跟踪转移状态
 
 
+
+
+主叫方(A)发起转移呼叫的触发机制：
+
+用户操作触发：
+话机物理按键：按"转移"键或特定功能码(如*78)
+DTMF按键输入：检测到转移功能码(如"#9")
+软客户端界面：点击转移按钮
+系统自动触发：
+IVR语音菜单选择：
+
+-- 示例：检测用户按键选择转移
+digits = session:playAndGetDigits(1, 1, 3, 5000, "#", "press_1_to_transfer.wav", "", "\\d+")
+if digits == "1" then
+    session:transfer("1000", "XML", "public") 
+end
+ACD系统逻辑：
+
+-- 根据呼叫时长、排队情况等自动转移
+if wait_time > 30 then
+    session:transfer("support@domain", "XML", "public")
+end
+在ai-999-9.lua中的实现：
+通过ASR语音识别结果触发：
+asr = vocustPlayAndDetectSpeech(G, "请说出转移目标")
+if asr:find("转人工") then
+    vocustTransfer(G, nlp.data.phone_no)
+end
+管理员强制转移：
+通过FS CLI命令：
+originate user/1000 &transfer(1001)
+转移请求的完整判断流程：
+
+检测触发条件(DTMF/语音/API)
+收集转移目标号码
+验证转移权限
+执行转移操作
+返回转移结果状态
+
+
