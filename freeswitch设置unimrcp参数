@@ -1,0 +1,32 @@
+1.怎么给unimrcp 设置 tts参数
+
+方法1：
+session:set_tts_params(ttsEngine, ttsVoice)
+
+方法2
+打开freeswitch etc/freeswitch/mrcp_profiles/mrcpv.xml 文件
+再synthparams中添加自定义参数
+<!-- Add any default MRCP params for SPEAK requests here -->
+<synthparams
+  <!-- 添加自定义参数 -->
+</synthparams>
+
+
+ 
+2.怎么给unimrcp 设置asr参数
+
+方法1：
+session:execute("play_and_detect_speech", audios.." detect:"..Engine.." {"..params.."}grammar"); --params 对应asr要设置的参数
+
+
+方法2：
+打开freeswitch etc/freeswitch/mrcp_profiles/mrcpv.xml 文件
+<!-- Add any default MRCP params for RECOGNIZE requests here -->
+<recogparams>
+    <param name="start-input-timers" value="false"/>
+    <!-- 添加自定义参数 -->
+</recogparams>
+在recogparams添加自定义参数
+
+
+
