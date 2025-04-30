@@ -79,3 +79,16 @@ static void *SWITCH_THREAD_FUNC prefetch_thread(switch_thread_t *thread, void *o
 
 
 param name="enable-file-formats" value="false"/>需要保持默认否则 httpapi 和 http_cache 可能出现资源竞争时不一致情况。
+
+
+
+httapi.conf 关键参数说明
+    <!-- time to keep audio files when discovered they were deleted from the http server -->
+    <param name="file-not-found-expires" value="300"/>
+作用: 当检测到远程音频文件被删除后，本地保留该文件的时间（秒）。
+
+    <!-- how often to re-check the server to make sure the remote file has not changed -->
+<param name="file-cache-ttl" value="300"/>
+缓存远程文件的检查间隔时间（秒），用于验证文件是否更新。
+
+
