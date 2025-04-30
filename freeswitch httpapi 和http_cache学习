@@ -37,6 +37,10 @@ mod_http_cache 检查缓存，如果未命中则下载并缓存文件。
 
 
 http_cache.conf
+prefetch_queue_size = 100; 
+prefetch_thread_count = 8; 
+默认预处理资源分配
+
 <param name="enable-file-formats" value="false"/>
 是否启用 http:// 和 https:// 格式的文件缓存。如果同时加载了 mod_httapi 模块，请不要启用。
 
