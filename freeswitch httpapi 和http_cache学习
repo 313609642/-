@@ -1,0 +1,77 @@
+1. mod_httpapi 模块 和 mod_http_cache 模块是怎么协同工作的
+
+
+mod_httapi 模块主要用于处理 HTTP API 请求，解析 XML 命令，并执行相关操作。它具有以下特点：
+
+命令解析：
+解析 XML 请求，例如 <playback>、<record> 等命令。
+以流式方式处理 HTTP 请求数据。
+
+支持的操作:
+例如播放录音、发送短信、加入会议等功能。
+
+文件缓存支持:
+使用 fetch_cache_data 和 load_cache_data 函数加载或存储文件缓存。
+可以通过本地缓存避免重复下载。
+
+
+mod_http_cache 模块实现了通用的 HTTP 缓存功能，主要用于：
+
+文件缓存管理：
+下载并缓存 HTTP 文件到本地。
+提供缓存机制以减少重复的网络请求。
+
+缓存策略：
+使用队列和替换算法管理缓存（例如时钟替换算法）。
+
+核心功能:
+提供 http_cache_get、http_cache_put 等接口，用于从缓存中获取或写入文件。
+
+
+
+典型工作流：
+mod_httapi 请求某个 HTTP 文件。
+mod_http_cache 检查缓存，如果未命中则下载并缓存文件。
+下载完成后，mod_httapi 使用缓存文件进行播放或其他操作。
+
+
+
+http_cache.conf
+<param name="enable-file-formats" value="false"/>
+是否启用 http:// 和 https:// 格式的文件缓存。如果同时加载了 mod_httapi 模块，请不要启用。
+
+<param name="max-urls" value="10000"/>
+定义缓存的最大 URL 数量，为 10000。
+<param name="default-max-age" value="86400"/>
+默认的最大缓存时间（秒），这里设置为 86400 秒（一天）。
+
+
+优化方向：
+SWITCH_STANDARD_API(http_cache_prefetch) {
+    switch_queue_trypush(gcache.prefetch_queue, url);  // 将 URL 加入预取队列
+}
+
+static void *SWITCH_THREAD_FUNC prefetch_thread(switch_thread_t *thread, void *obj) {
+    // 后台线程处理预取任务
+    switch_queue_pop(gcache.prefetch_queue, &url);
+    http_cache_get(&gcache, NULL, NULL, url, DOWNLOAD, 0, NULL);  // 下载文件
+}
+
+配置合适的缓存策略（如最大缓存大小、过期时间）以提高性能。
+在高并发场景中，利用预取功能减少请求延迟。
+
+
+缓存的两种种处理方案：
+在配置文件中，<param name="max-urls" value="10000"/> 定义了缓存的最大 URL 数量。如果超过了这个最大值，FreeSWITCH 的 mod_http_cache 模块可能会按照以下方式处理：
+
+移除最旧的缓存（LRU 策略）： 通常情况下，缓存系统会采用 Least Recently Used (LRU) 策略，即当缓存的 URL 数量超过设定的限制时，最久未被访问的缓存条目会被移除，以腾出空间给新的 URL。
+
+拒绝新的缓存请求： 如果模块没有实现 LRU 策略，它可能会直接拒绝缓存超过限制的 URL，导致新请求无法被缓存。
+
+日志警告： 模块可能会在日志中记录警告，提示管理员缓存数量已达到最大值。
+
+具体行为取决于 mod_http_cache 模块的实现逻辑。如果需要确认，可以查看模块的源代码或测试该场景。你也可以调整 max-urls 参数的值以适应更大的缓存需求。
+
+
+
+param name="enable-file-formats" value="false"/>需要保持默认否则 httpapi 和 http_cache 可能出现资源竞争时不一致情况。
