@@ -1,0 +1,34 @@
+opneisps 2.4.x 支持 dialplan（拨号计划） 这里总结一下最近学习成果
+
+#1.首先加载拨号计划并且经行初始化
+loadmodule "dialplan.so"
+modparam("dialplan", "db_url", "mysql://127.0.0.1:3306/opensips")
+modparam("dialplan", "partition","default:table_name=dialplan;db_url=mysql://172.0.0.1:3306/opensips;")
+
+#2.在使用之前我们需要对opensips数据库的拨号计划表创建匹配关系
+#-- 数据库表 dialplan 示例
+#INSERT INTO dialplan (dpid, pr, match_op, match_exp, subst_exp, attrs) VALUES
+#(100, 10, 1, '^80010001hk$', '0', 'E1'),
+#(100, 20, 1, '^xunshi/(.*)$', 'sip:${1}@xunshi.gw;transport=udp', 'R1');
+#这样我们就拥有了两种匹配关系
+
+route{
+  ...
+
+  #拨号计划的主要目标是吧 输入的A类容改变成B内容在发送出去，完成拨号计划需求
+  #列如：
+  
+  xlog("===== 转换前 ====> 被叫号码: $rU, 输入参数: $fU/$avp(dest)\n");
+if (dp_translate("100", "$fU/$avp(dest)", "$var(attrs)")) {
+  xlog("===== 转换成功 ====> 输出: $var(attrs), 目标: xunshi\n");
+} else {
+  xlog("!!!!! 转换失败 !!!!! 规则 100 未匹配\n");
+}
+
+
+
+  ...
+}
+
+
+4. 测试
