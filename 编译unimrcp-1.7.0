@@ -1,9 +1,20 @@
-# unimrcpserver 编译示例
+#环境要求
 
-DIR=$(cd `dirname "$0"`; pwd)
+操作系统：Centos7.9
+内存：2GB 或更高
+磁盘空间：10GB 或更高
 
+
+#安装步骤
+
+1.安装依赖
 yum -y install libwebsockets-devel
 
+
+2.编译
+sh build.sh 内容如下：
+---------------------------------
+DIR=$(cd `dirname "$0"`; pwd)
 cd "$DIR/unimrcp-deps-1.6.0"
 "$DIR/unimrcp-deps-1.6.0/build-dep-libs.sh" -s
 
@@ -16,6 +27,13 @@ cd "$DIR/unimrcp-unimrcp-1.7.0"
     --prefix=/opt/unimrcp-1.7.0 \
     "$@" \
 && make
+----------------------------------
 
+#配置文件
+1.默认配置文件位置：
+/opt/unimrcp-1.7.0/conf
 
-配置：
+2.主要配置文件：
+unimrcpserver.xml unimrcpserver配置位置以及讯飞asr,tts插件配置目录
+
+#启动命令
