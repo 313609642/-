@@ -1,0 +1,18 @@
+# unimrcpserver 编译示例
+
+DIR=$(cd `dirname "$0"`; pwd)
+
+yum -y install libwebsockets-devel
+
+cd "$DIR/unimrcp-deps-1.6.0"
+"$DIR/unimrcp-deps-1.6.0/build-dep-libs.sh" -s
+
+cd "$DIR/unimrcp-unimrcp-1.7.0"
+"$DIR/unimrcp-unimrcp-1.7.0/bootstrap"
+"$DIR/unimrcp-unimrcp-1.7.0/configure" \
+    --with-apr="$DIR/unimrcp-deps-1.6.0/libs/apr" \
+    --with-apr-util="$DIR/unimrcp-deps-1.6.0/libs/apr-util" \
+    --with-sofia-sip="$DIR/unimrcp-deps-1.6.0/libs/sofia-sip" \
+    --prefix=/opt/unimrcp-1.7.0 \
+    "$@" \
+&& make
