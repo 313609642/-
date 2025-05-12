@@ -37,3 +37,42 @@ cd "$DIR/unimrcp-unimrcp-1.7.0"
 unimrcpserver.xml unimrcpserver配置位置以及讯飞asr,tts插件配置目录
 
 #启动命令
+
+1.编写启动配置
+vim /etc/systemd/system/ali-mrcp.service 内容如下：
+----------------------------------
+[Unit]
+Description=ali MRCP server daemon
+After=network.target
+
+[Service]
+ExecStart=/opt/unimrcp-1.7.0-ali/bin/unimrcpserver -r /opt/unimrcp-1.7.0-ali -o 2 -l 7 -w
+Restart=on-failure
+LimitCORE=infinity
+LimitNOFILE=65535
+
+[Install]
+WantedBy=multi-user.target
+[root@VM-2-24-centos system]# pwd
+/etc/systemd/system
+----------------------------------
+
+开始运行程序
+vim startup.sh 内容如下
+--------------------------------
+#!/bin/sh
+systemctl start ali-mrcp.service
+--------------------------------
+
+
+停止运行程序
+cat startup.sh
+-------------------------------
+#!/bin/sh
+systemctl stop ali-mrcp.service
+-------------------------------
+
+启用服务：
+systemctl daemon-reload #作用：重新加载 systemd 守护进程的配置文件。
+systemctl start ali-mrcp.service  立即启动名为 ali-mrcp.service 的系统服务。
+systemctl enable ali-mrcp.service  设置 ali-mrcp.service 在系统开机时自动启动。
