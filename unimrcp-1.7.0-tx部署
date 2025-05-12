@@ -10,10 +10,12 @@ unimrcp-1.7.0-tx 应用部署示例
 
 1.解压文件包
   tar -zxvf unimrcp.tar.gz 到部署路径
+  cp -r unimrcp-1.7.0 unimrcp-1.7.0-tx-large 命名
 
 2.默认配置文件位置：
   cd /opt/unimrcp-1.7.0-tx-large/admin
   cd /opt/unimrcp-1.7.0-tx-large/conf
+
 
 2.主要配置文件：
   a. 打开 vim /opt/unimrcp-1.7.0-tx-large/admin/conf.ini   
