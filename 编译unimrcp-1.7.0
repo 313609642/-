@@ -64,7 +64,7 @@ systemctl start xf-mrcp.service
 
 
 停止运行程序
-vim startup.sh 内容如下
+vim stop.sh 内容如下
 -------------------------------
 #!/bin/sh
 systemctl stop xf-mrcp.service
