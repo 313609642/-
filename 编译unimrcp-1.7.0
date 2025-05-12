@@ -16,3 +16,6 @@ cd "$DIR/unimrcp-unimrcp-1.7.0"
     --prefix=/opt/unimrcp-1.7.0 \
     "$@" \
 && make
+
+
+配置：
