@@ -49,6 +49,9 @@ prefetch_thread_count = 8;
 <param name="default-max-age" value="86400"/>
 默认的最大缓存时间（秒），这里设置为 86400 秒（一天）。
 
+录音保存位置
+2025-05-08 19:51:49.471099 [DEBUG] switch_core_file.c:342 File /opt/freeswitch/share/freeswitch/sounds/******/sorry-1.wav sample rate 16000 doesn't match requested rate 8000
+
 
 优化方向：
 SWITCH_STANDARD_API(http_cache_prefetch) {
@@ -90,5 +93,9 @@ httapi.conf 关键参数说明
     <!-- how often to re-check the server to make sure the remote file has not changed -->
 <param name="file-cache-ttl" value="300"/>
 缓存远程文件的检查间隔时间（秒），用于验证文件是否更新。
+
+
+
+
 
 
