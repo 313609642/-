@@ -1,5 +1,5 @@
-opensips sip路由讲解
-公网向内网穿透invate消息路由
+ opensips sip路由讲解
+公网向内网穿透invate消息路由 目的地为：192.168.53.166
 Request-Line: INVITE sip:81010006@1217320380889497600.ctrip SIP/2.0
 Record-Route: <sip:123.**.**.**:20001;lr> 
 Record-Route: <sip:172.16.2.15:20001;lr>
