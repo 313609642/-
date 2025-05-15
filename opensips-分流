@@ -1,1 +1,26 @@
+1. opensips 如何做到业务分流？
+
+
+/usr/local/opensips/sbin/opensipsctl fifo lb_list |grep cm -C 2
+Destination:: sip:10.0.1.34:6084 id=1306 group=4 enabled=yes auto-reenable=on
+	Resources:: 
+		Resource:: cm max=2000 load=12
+Destination:: sip:10.0.1.41:5980 id=1307 group=3 enabled=yes auto-reenable=on
+	Resources:: 
+--
+Destination:: sip:10.0.2.7:6084 id=1312 group=4 enabled=yes auto-reenable=on
+	Resources:: 
+		Resource:: cm max=2000 load=11
+Destination:: sip:203.80.144.40:7320 id=1313 group=20 enabled=yes auto-reenable=on
+	Resources:: 
+--
+Destination:: sip:10.0.2.30:6084 id=1325 group=4 enabled=yes auto-reenable=on
+	Resources:: 
+		Resource:: cm max=2000 load=11
+Destination:: sip:127.0.0.1:5060 id=1326 group=110100 enabled=yes auto-reenable=on
+	Resources:: 
+--
+Destination:: sip:10.0.2.20:6084 id=1336 group=4 enabled=yes auto-reenable=on
+	Resources:: 
+		Resource:: cm max=2000 load=11
 
