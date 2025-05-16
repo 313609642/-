@@ -1,0 +1,47 @@
+问题：实时流状态下AI对话正常，但保存到本地录音人声录音比ai 录音慢的情况， 下面是重点sdp 说明：
+
+
+6ccd7b37-3881-413d-9298-ee4e5c45cd1a 2025-05-16 14:37:33.736451 [DEBUG] sofia.c:7099 Remote SDP:
+6ccd7b37-3881-413d-9298-ee4e5c45cd1a v=0
+6ccd7b37-3881-413d-9298-ee4e5c45cd1a o=DinStar 3980690308421912196 5321560340113671970 IN IP4 192.168.11.84
+6ccd7b37-3881-413d-9298-ee4e5c45cd1a s=-
+6ccd7b37-3881-413d-9298-ee4e5c45cd1a c=IN IP4 10.0.1.27
+6ccd7b37-3881-413d-9298-ee4e5c45cd1a t=0 0
+6ccd7b37-3881-413d-9298-ee4e5c45cd1a m=audio 34524 RTP/AVP 97 0 101
+6ccd7b37-3881-413d-9298-ee4e5c45cd1a a=rtpmap:97 iLBC/8000
+6ccd7b37-3881-413d-9298-ee4e5c45cd1a a=rtpmap:0 PCMU/8000
+6ccd7b37-3881-413d-9298-ee4e5c45cd1a a=rtpmap:101 telephone-event/8000
+6ccd7b37-3881-413d-9298-ee4e5c45cd1a a=fmtp:101 0-15
+6ccd7b37-3881-413d-9298-ee4e5c45cd1a a=ptime:30
+6ccd7b37-3881-413d-9298-ee4e5c45cd1a a=rtcp:34525
+6ccd7b37-3881-413d-9298-ee4e5c45cd1a m=audio 0 RTP/AVP 19
+6ccd7b37-3881-413d-9298-ee4e5c45cd1a 
+6ccd7b37-3881-413d-9298-ee4e5c45cd1a 2025-05-16 14:37:33.736451 [DEBUG] switch_core_media.c:4449 Audio Codec Compare [iLBC:97:8000:30:13330:1]/[PCMA:8:8000:20:64000:1]
+6ccd7b37-3881-413d-9298-ee4e5c45cd1a 2025-05-16 14:37:33.736451 [DEBUG] switch_core_media.c:4449 Audio Codec Compare [iLBC:97:8000:30:13330:1]/[iLBC:97:8000:30:13330:1]
+6ccd7b37-3881-413d-9298-ee4e5c45cd1a 2025-05-16 14:37:33.736451 [DEBUG] switch_core_media.c:4504 Audio Codec Compare [iLBC:97:8000:30:13330:1] ++++ is saved as a match
+6ccd7b37-3881-413d-9298-ee4e5c45cd1a 2025-05-16 14:37:33.736451 [DEBUG] switch_core_media.c:4449 Audio Codec Compare [iLBC:97:8000:30:13330:1]/[opus:116:48000:20:0:1]
+6ccd7b37-3881-413d-9298-ee4e5c45cd1a 2025-05-16 14:37:33.736451 [DEBUG] switch_core_media.c:4449 Audio Codec Compare [iLBC:97:8000:30:13330:1]/[PCMU:0:8000:20:64000:1]
+6ccd7b37-3881-413d-9298-ee4e5c45cd1a 2025-05-16 14:37:33.736451 [DEBUG] switch_core_media.c:4449 Audio Codec Compare [PCMU:0:8000:30:64000:1]/[PCMA:8:8000:20:64000:1]
+6ccd7b37-3881-413d-9298-ee4e5c45cd1a 2025-05-16 14:37:33.736451 [DEBUG] switch_core_media.c:4449 Audio Codec Compare [PCMU:0:8000:30:64000:1]/[iLBC:97:8000:30:13330:1]
+6ccd7b37-3881-413d-9298-ee4e5c45cd1a 2025-05-16 14:37:33.736451 [DEBUG] switch_core_media.c:4449 Audio Codec Compare [PCMU:0:8000:30:64000:1]/[opus:116:48000:20:0:1]
+6ccd7b37-3881-413d-9298-ee4e5c45cd1a 2025-05-16 14:37:33.736451 [DEBUG] switch_core_media.c:4449 Audio Codec Compare [PCMU:0:8000:30:64000:1]/[PCMU:0:8000:20:64000:1]
+6ccd7b37-3881-413d-9298-ee4e5c45cd1a 2025-05-16 14:37:33.736451 [DEBUG] switch_core_media.c:4485 Audio Codec Compare [PCMU:0:8000:20:64000:1] is saved as a near-match
+6ccd7b37-3881-413d-9298-ee4e5c45cd1a 2025-05-16 14:37:33.736451 [DEBUG] switch_core_media.c:4365 Set telephone-event payload to 101@8000
+6ccd7b37-3881-413d-9298-ee4e5c45cd1a 2025-05-16 14:37:33.736451 [DEBUG] switch_core_media.c:4708 Set telephone-event payload to 101@8000
+6ccd7b37-3881-413d-9298-ee4e5c45cd1a 2025-05-16 14:37:33.736451 [DEBUG] switch_core_media.c:4767 sofia/external/nobody@10.0.1.41:5980 Set 2833 dtmf send payload to 101 recv payload to 101
+6ccd7b37-3881-413d-9298-ee4e5c45cd1a 2025-05-16 14:37:33.736451 [DEBUG] switch_core_media.c:6867 Audio params changed for sofia/external/nobody@10.0.1.41:5980 from 10.0.1.39:28990 to 10.0.1.27:34524
+6ccd7b37-3881-413d-9298-ee4e5c45cd1a 2025-05-16 14:37:33.736451 [DEBUG] switch_core_media.c:6878 AUDIO RTP [sofia/external/nobody@10.0.1.41:5980] 10.0.1.34 port 27758 -> 10.0.1.27 port 34524 codec: 97 ms: 20
+6ccd7b37-3881-413d-9298-ee4e5c45cd1a 2025-05-16 14:37:33.736451 [DEBUG] switch_core_media.c:6907 AUDIO RTP CHANGING DEST TO: [10.0.1.27:34524]
+6ccd7b37-3881-413d-9298-ee4e5c45cd1a 2025-05-16 14:37:33.736451 [DEBUG] sofia.c:8004 Processing updated SDP
+6ccd7b37-3881-413d-9298-ee4e5c45cd1a 2025-05-16 14:37:33.756461 [DEBUG] switch_core_media.c:2959 Changing Codec from PCMA@20ms@8000hz to iLBC@30ms@8000hz
+6ccd7b37-3881-413d-9298-ee4e5c45cd1a 2025-05-16 14:37:33.796450 [DEBUG] switch_rtp.c:3986 RE-Starting timer [soft] 240 bytes per 30ms
+6ccd7b37-3881-413d-9298-ee4e5c45cd1a 2025-05-16 14:37:33.796450 [DEBUG] switch_core_media.c:3061 Set Codec sofia/external/nobody@10.0.1.41:5980 iLBC/8000 30 ms 240 samples 13330 bits 1 channels
+6ccd7b37-3881-413d-9298-ee4e5c45cd1a 2025-05-16 14:37:33.796450 [DEBUG] switch_core_codec.c:123 sofia/external/nobody@10.0.1.41:5980 Original read codec replaced with iLBC:97
+6ccd7b37-3881-413d-9298-ee4e5c45cd1a 2025-05-16 14:37:33.796450 [DEBUG] switch_core_codec.c:153 Destroying BUG Codec PCMA:8
+6ccd7b37-3881-413d-9298-ee4e5c45cd1a 2025-05-16 14:37:33.796450 [DEBUG] sofia.c:7089 Channel sofia/external/nobody@10.0.1.41:5980 entering state [completed][200]
+6ccd7b37-3881-413d-9298-ee4e5c45cd1a 2025-05-16 14:37:33.796450 [DEBUG] sofia.c:7089 Channel sofia/external/nobody@10.0.1.41:5980 entering state [ready][200]
+6ccd7b37-3881-413d-9298-ee4e5c45cd1a 2025-05-16 14:37:33.796450 [DEBUG] switch_core_io.c:1448 Engaging Write Buffer at 480 bytes to accommodate 320->480
+6ccd7b37-3881-413d-9298-ee4e5c45cd1a 2025-05-16 14:37:33.856458 [DEBUG] switch_rtp.c:7271 Correct audio ip/port confirmed.
+6ccd7b37-3881-413d-9298-ee4e5c45cd1a 2025-05-16 14:37:33.856458 [DEBUG] switch_core_io.c:448 Setting BUG Codec iLBC:97
+
+导致问题的原因是： from PCMA@20ms@8000hz to iLBC@30ms@8000hz AI 的采样时间和ilbc 不一致导致的问题
