@@ -1,0 +1,15 @@
+0 0 * * * find /opt/unimrcp/admin/var/recog/asr -name '*.wav' -mtime +21 -delete >/dev/null 2>&1
+
+时间设置：0 0 * * * 表示每天午夜(00:00)执行一次
+
+命令分解：
+
+find /opt/unimrcp/admin/var/recog/asr：在指定目录搜索
+
+-name '*.wav'：查找所有.wav格式文件
+
+-mtime +21：查找21天(约3周)前修改的文件
+
+-delete：直接删除找到的文件
+
+>/dev/null 2>&1：丢弃所有输出和错误信息
