@@ -1,15 +1,17 @@
-0 0 * * * find /opt/unimrcp/admin/var/recog/asr -name '*.wav' -mtime +21 -delete >/dev/null 2>&1
+crontab 是 Linux/Unix 系统中用于设置定时任务的工具，允许用户按照设定的时间周期自动执行命令或脚本。
+1. 基本命令
+命令	说明
+crontab -e	编辑当前用户的定时任务（首次使用时会选择默认编辑器）
+crontab -l	列出当前用户的所有定时任务
+crontab -r	删除当前用户的所有定时任务（慎用！）
+crontab -u 用户名 -e	编辑指定用户的定时任务（需管理员权限）
 
+0 0 * * * find /opt/unimrcp/admin/var/recog/asr -name '*.wav' -mtime +21 -delete >/dev/null 2>&1
 时间设置：0 0 * * * 表示每天午夜(00:00)执行一次
 
 命令分解：
-
 find /opt/unimrcp/admin/var/recog/asr：在指定目录搜索
-
 -name '*.wav'：查找所有.wav格式文件
-
 -mtime +21：查找21天(约3周)前修改的文件
-
 -delete：直接删除找到的文件
-
 >/dev/null 2>&1：丢弃所有输出和错误信息
