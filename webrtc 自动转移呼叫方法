@@ -1,0 +1,21 @@
+OpenSIPS 处理 REFER 的工作流程
+收到 REFER 请求后，OpenSIPS 会：
+  
+检查 Refer-To 头字段
+验证请求的合法性
+应用配置的转换规则
+
+根据配置，OpenSIPS 可以：
+代理转发 REFER 请求
+本地处理并生成新的 INVITE
+拒绝不符合策略的请求
+通常会生成 NOTIFY 消息来报告 REFER 请求的状态
+
+
+典型应用场景示例
+
+  UA1 ---REFER--> OpenSIPS ---INVITE--> UA3
+       (Refer-To: UA3)
+
+在这个流程中，UA1 通过发送 REFER 消息让 OpenSIPS 发起对 UA3 的呼叫。
+REFER 消息是 SIP 协议中实现高级呼叫控制功能的重要手段，OpenSIPS 通过正确处理这些消息可以实现丰富的电信业务功能。
