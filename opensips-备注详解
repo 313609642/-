@@ -1,1 +1,10 @@
+si: 表示 SIP 消息的 来源IP地址（Source IP）
+sp: 表示 来源端口（Source Port）
+ci：表示 Call-ID 的缩写
+rd：远程目标地址（Remote Destination）
+rU: Request URI（请求URI）
+fU: From URI（来源URI）
 
+主叫方（fU）：号码 10131303
+被叫方（rU）：号码 80010022yt
+目标地址（rd）：IP 10.0.1.38（可能是 OpenSIPS 下一跳或终端设备）
