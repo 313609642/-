@@ -8,3 +8,6 @@ fU: From URI（来源URI）
 主叫方（fU）：号码 10131303
 被叫方（rU）：号码 80010022yt
 目标地址（rd）：IP 10.0.1.38（可能是 OpenSIPS 下一跳或终端设备）
+
+查看网关信息
+fs_cli -x "sofia status gateway opensips"
