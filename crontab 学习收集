@@ -7,6 +7,11 @@ crontab -r	删除当前用户的所有定时任务（慎用！）
 crontab -u 用户名 -e	编辑指定用户的定时任务（需管理员权限）
 
 0 0 * * * find /opt/unimrcp/admin/var/recog/asr -name '*.wav' -mtime +21 -delete >/dev/null 2>&1
+
+0 0 * * * find /opt/unimrcp-1.7.0/var/tts-cache/pcm -name '*.wav' -mtime +7 -delete >/dev/null 2&1
+0 0 * * * find /opt/unimrcp-1.7.0/var/tts-cache/meta -name '*.json' -mtime +7 -delete >/dev/null 2&1
+
+
 时间设置：0 0 * * * 表示每天午夜(00:00)执行一次
 
 命令分解：
