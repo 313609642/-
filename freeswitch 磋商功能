@@ -4,8 +4,8 @@ A电话   ------->   opensips sbc  ---->  opensips sm -----> freeswitch ivr  ---
 
 呼叫控制台 -----> 发起B到C的咨询----->  软硬联动服务（ESL）----->  freeswitch ivr ----> 后端服务处理进线咨询选择坐席完成发送refer消息消息成功挂断C ----> opensips sm  --->  freeswitch cm --->
 
-refer 发起新的呼叫到 D -----> freeswitch cm --- >D 和B 桥接  ----> 沟通结束 D挂断 B和A 桥接 磋商完成
-                                                           ----> 沟通结束B挂断 D和A桥接 磋商完成
+refer 发起新的呼叫到 D -----> freeswitch cm --- >D 和B 桥接 A保持呼叫  ----> 沟通结束 D挂断 B和A 桥接 磋商完成
+                                                           ----> 沟通结束 B挂断 D和A桥接 磋商完成
  
 
   
