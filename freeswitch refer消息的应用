@@ -1,0 +1,12 @@
+
+1.业务流程
+客人呼叫 ---> 通过电话网络转移----> opensips ibcf 节点  -->  opensips sm 节点 ---->  freeswitch IVR 节点 ----->通过拨号计划触发tcp 链接到---->后端java服务，来触发IVR导航呼叫发（refer）命令
+
+ ------> IVR导航（refer ）命令----> opensips sm 节点   ------>  freeswitch refer 节点 发起invate 命令----> opensips sm 节点 转移到呼叫负载节点freeswitch cm
+
+
+
+refer 的作用：
+
+1.创建一个临时的会话，当会话处理完成把呼叫转移回去形成一个临时的呼叫咨询流程
+
