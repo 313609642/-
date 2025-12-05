@@ -1,0 +1,13 @@
+curl -X POST "http://localhost:5000/fetch_all_logs" -H "Content-Type: application/json" -d '{
+    "kibana_cfg": {
+        "es_url": "https://devops.vocustcloud.com/eslog",
+        "target_acid": "ibcf-c49ced5a-079a-410c-a612-8c53f73eb6c6",
+        "auth_token": "b3BzOm1IeXQ1QWVwcGlFY1VmUTBqT2ln",
+        "indexes": {
+            "freeswitch": "freeswitch_cm-acd-2025.11.19",  # 指定具体日期索引
+            "unimrcp": "unimrcp-2025.11.19"
+        }
+    },
+    "start_time": "2025-11-19T20:13:00+08:00",  # 缩小时间范围（精准到通话时段）
+    "end_time": "2025-11-19T20:14:00+08:00"
+}'
