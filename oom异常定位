@@ -1,0 +1,1 @@
+dmesg | grep -i 'oom\|kill' 系统杀死日志查询
