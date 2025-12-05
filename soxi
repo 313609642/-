@@ -1,0 +1,8 @@
+soxi 可以再linux系统查看录音文件编码类型
+
+# 转换为 8kHz, 16-bit, mono, signed-integer PCM
+sox "/usr/local/freeswitch/sounds/en/us/callie/digits/8000/1.wav" \
+    -r 8000 -c 1 -b 16 \
+    "/tmp/1_fixed.wav" \
+    remix 1 \
+    vol 1.5
