@@ -1,0 +1,12 @@
+# 查看是否有以下关键词
+grep "resample" freeswitch.log
+grep "transcode" freeswitch.log
+grep "fail" freeswitch.log
+
+# 搜索所有 dialplan 中与 say 相关的配置
+grep -r "say:" /usr/local/freeswitch/conf/dialplan/
+grep -r "<action.*say" /usr/local/freeswitch/conf/dialplan/
+
+
+# 查看日志中该 UUID 的完整上下文
+grep "a77da942-2215-4710-8dbd-414507440feb" /usr/local/freeswitch/log/freeswitch.log | grep -A 10 -B 10 "Handle say"
