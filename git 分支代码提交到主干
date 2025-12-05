@@ -1,1 +1,16 @@
 
+# 1. 确保你在主干
+git switch main
+
+# 2. 拉最新主干
+git pull origin main
+
+# 3. 合并功能分支
+git merge task/tc-20968
+
+# 4. 如有冲突，解决后 add 并 commit
+git add .
+git commit -m "Merge task/tc-20968"
+
+# 5. 推送到远程主干
+git push origin main
