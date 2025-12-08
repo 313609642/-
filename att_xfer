@@ -1,0 +1,17 @@
+三方功能
+
+
+uuid_setvar 3e025682-2447-4831-b7b0-6a3294c01033 origination_cancel_key # （转接命令）
+uuid_setvar 3e025682-2447-4831-b7b0-6a3294c01033 attxfer_hangup_key * （挂断命令）
+
+
+esl 客户端命令
+测试通过  nc 链接到 freeswitch 的client端口并且登录成功后发送下面命令可实现三方对话功能
+sendmsg 3e025682-2447-4831-b7b0-6a3294c01033
+call-command: execute
+execute-app-name: att_xfer
+execute-app-arg: 
+sendmsg 3e025682-2447-4831-b7b0-6a3294c01033
+call-command: execute
+execute-app-name: bridge
+execute-app-arg: user/18556722815
