@@ -1,1 +1,5 @@
 /osips.ctl fifo lb_reload
+
+
+
+pkill -f "opensipsctl fifo"
