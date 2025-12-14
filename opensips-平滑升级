@@ -21,3 +21,7 @@ id：唯一标记  group：组 enabled （是否可用 yes 可用, no 不可用�
 
 问题：
 1.不清楚opensips 的节点是怎么跟freeswitch 关联? 还需要继续阅读代码找到关联关系
+
+
+
+ps -ef | grep -v grep | grep "opensipsctl fifo" | awk '{print $2}' | xargs -r kill -15
