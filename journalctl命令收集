@@ -1,0 +1,5 @@
+# 只保留近 3 天的日志
+journalctl --vacuum-time=3d
+
+# 限制日志总大小不超过 100MB
+journalctl --vacuum-size=100M
