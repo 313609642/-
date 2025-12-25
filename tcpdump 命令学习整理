@@ -1,1 +1,5 @@
 tcpdump -i any -w sss.pcap
+
+
+
+tcpdump -i eth0 -nn -s 500 -w invite_vip_full.pcap 'host 172.26.221.249 and (udp port 15066 or udp port 20001) and sip contains "INVITE"'
